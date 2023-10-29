@@ -4,13 +4,13 @@ import React from "react";
 import DashboardNavItem from "../atom/DashboardNavItem";
 import Link from "next/link";
 
-const DashboardLayout = ({ children, logout, balance, trip }) => {
+const DashboardLayout = ({ children, logout, balance, name }) => {
   return (
     <section
       className="flex"
       style={{ width: "100vw", height: "100vh", overflow: "hidden" }}
     >
-      <aside className="w-1/4 bg-mainc" style={{ height: "100vh" }}>
+      <aside className="w-1/5 bg-mainc" style={{ height: "100vh" }}>
         <Link href={"/"}>
           <Image
             src="/images/logo.png"
@@ -36,13 +36,11 @@ const DashboardLayout = ({ children, logout, balance, trip }) => {
           </button>
         </div>
       </aside>
-      <main className="w-3/4 mt-12 px-16" style={{ height: "100vh" }}>
+      <main className="w-4/5 mt-12 px-10" style={{ height: "100vh" }}>
         <section className="flex justify-between item-center gap-20">
+          <h3 className="text-blackt font-bold text-2xl">Welcome {name}</h3>
           <h3 className="text-blackt font-bold text-2xl">
             Nasa Token Balance: {balance}
-          </h3>
-          <h3 className="text-blackt font-bold text-2xl">
-            Total trip on NasaExpress: {trip}
           </h3>
         </section>
         {children}

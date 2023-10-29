@@ -1,14 +1,13 @@
-import BookRide from "@/components/atom/BookRide";
+import PurchaseNasa from "@/components/atom/PurchaseNasa";
 import DashboardLayout from "@/components/layout/DashboardLayout";
-import DataTable from "@/components/organism/DataTable";
-import React, { useState } from "react";
+import DataTableNasaTransaction from "@/components/organism/DataTableNasaTransaction";
+import React from "react";
 
-const Dashboard = () => {
-  const [price, setprice] = useState("");
+const Buy_nasa = () => {
   const data = [
-    { pickup: "Lagos", destination: "Abuja", amountSpent: 50.25 },
-    { pickup: "Ondo", destination: "kano", amountSpent: 75.5 },
-    { pickup: "Lagos", destination: "Ibadan", amountSpent: 30.75 },
+    { type: "Debit", narration: "Deposit from Stripe", amount: 50.25 },
+    { type: "Debit", narration: "Deposit from Stripe", amount: 50.25 },
+    { type: "Debit", narration: "Deposit from Stripe", amount: 50.25 },
   ];
   const logout_user = async () => {
     console.log("click");
@@ -28,24 +27,27 @@ const Dashboard = () => {
   };
   return (
     <DashboardLayout
-      name={"Saheed babatunde"}
+      name={"Saheed Babatunde"}
       balance={2000}
       logout={logout_user}
     >
       <section className="mt-4">
-        <h1 className="text-3xl font-bold text-mainc">Book Ride</h1>
+        <h1 className="text-3xl font-bold text-mainc">Buy Nasa</h1>
         <div>
-          <BookRide />
+          <p className="text-center">$1 == 500 nasa</p>
+          <PurchaseNasa />
         </div>
       </section>
       <section className="mt-4">
-        <h1 className="text-3xl font-bold text-mainc">Ride Taken</h1>
         <div>
-          <DataTable data={data} />
+          <div>
+            <h1 className="text-3xl font-bold text-mainc">Nasa Transaction</h1>
+            <DataTableNasaTransaction data={data} />
+          </div>
         </div>
       </section>
     </DashboardLayout>
   );
 };
 
-export default Dashboard;
+export default Buy_nasa;

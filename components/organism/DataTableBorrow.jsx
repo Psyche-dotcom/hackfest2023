@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ReactPaginate from "react-paginate";
 
-const DataTable2 = ({ data }) => {
+const DataTableBorrow = ({ data }) => {
   const itemsPerPage = 2; // Number of items to display per page
   const [currentPage, setCurrentPage] = useState(0);
 
@@ -58,4 +58,4 @@ const DataTable2 = ({ data }) => {
   );
 };
 
-export default DataTable2;
+export default DataTableBorrow;

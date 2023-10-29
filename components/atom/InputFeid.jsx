@@ -2,7 +2,7 @@ import React from "react";
 
 const InputFeid = ({ title, type, id, setstate }) => {
   return (
-    <fieldset class="row-input">
+    <fieldset className="row-input">
       <legend className="text-blackt font-bold">{title}</legend>
       <input
         name={id}

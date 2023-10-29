@@ -12,9 +12,9 @@ const HeroText = () => {
           </h1>
           <p className="text-sm text-white">
             NASA Express is your one-stop solution for hassle-free and
-            convenient bus boarding in every corner of Nigeria. We're here to
-            make your travel experience smooth and hassle-free, offering a range
-            of transportation options at your fingertips.
+            convenient bus boarding in every corner of Nigeria. We&apos;re here
+            to make your travel experience smooth and hassle-free, offering a
+            range of transportation options at your fingertips.
           </p>
           <div className="flex items-center gap-8 mt-8">
             <NavItem2 text={"Login"} url={"/login"} />

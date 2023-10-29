@@ -4,12 +4,12 @@ import React from "react";
 const DashboardNavItem = ({ link, title }) => {
   return (
     <Link href={link}>
-      <span
-        className={` cursor-pointer customPoint after:content-['']  after:absolute  after:h-1 relative  text-mainc text-sm  after:bg-mainc self-start `}
+      <p
+        className={`cursor-pointer customPoint after:content-['']   after:absolute  after:h-1 relative  text-white text-2xl ml-6  after:bg-blackt self-start `}
         aria-label={title}
       >
         {title}
-      </span>
+      </p>
     </Link>
   );
 };

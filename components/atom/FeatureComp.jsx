@@ -1,6 +1,6 @@
 import React from "react";
 
-const Feature = ({ no, head, text }) => {
+const FeatureComp = ({ head, text }) => {
   return (
     <div className="flex gap-2 items-start">
       <img src={"/images/ellipse-8.svg"} alt="elips" />
@@ -12,4 +12,4 @@ const Feature = ({ no, head, text }) => {
   );
 };
 
-export default Feature;
+export default FeatureComp;

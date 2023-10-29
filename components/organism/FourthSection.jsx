@@ -1,5 +1,5 @@
 import React from "react";
-import Feature from "../atom/Feature";
+import Feature from "../atom/FeatureComp";
 import Image from "next/image";
 
 const FourthSection = () => {

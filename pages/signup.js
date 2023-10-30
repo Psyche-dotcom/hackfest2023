@@ -1,6 +1,8 @@
 import InputFeid from "@/components/atom/InputFeid";
+import { postDataAuth } from "@/utils/ApiCall";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 
 const Register = () => {
@@ -13,6 +15,45 @@ const Register = () => {
   const [lincensedate, setlincensedate] = useState("");
   const [password, setpassword] = useState("");
   const [comfirmpassword, setcomfirmpassword] = useState("");
+  const [ErrorState, setErrorState] = useState(false);
+  const [Error, setError] = useState("");
+  const router = useRouter();
+  const SubmitSignUp = async () => {
+    const url = `${process.env.NEXT_PUBLIC_BaseUrl}api/user/auth/register`;
+    var data = {
+      firstName: firstname,
+      lastName: lastname,
+      userName: email,
+      email: email,
+      phoneNumber: phone,
+      driverLicence: lincenseno || "R0456545",
+      driverLicenceExpiryDate: lincensedate || new Date(),
+      role: client ? "Rider" : "User",
+      password: password,
+      confirmPassword: comfirmpassword,
+    };
+    try {
+      var setup = await postDataAuth(url, data, "");
+      if (setup.statusCode === 200) {
+        const url = `${process.env.NEXT_PUBLIC_BaseUrl}api/user/auth/login`;
+        var data = {
+          email: email,
+          password: password,
+        };
+        var login = await postDataAuth(url, data, "");
+        if (login.statusCode === 200) {
+          localStorage.setItem("token", login.result.jwt);
+          router.push("/dashboard");
+        }
+      }
+    } catch (error) {
+      var errorMessage = error.response.data.errorMessages;
+      console.log(error);
+      setError(errorMessage[0]);
+      setErrorState(true);
+    }
+  };
+
   return (
     <section className="bg-mainc" style={{ width: "100vw", height: "100vh" }}>
       <div className="flex flex-col justify-center items-center w-full h-full">
@@ -99,7 +140,7 @@ const Register = () => {
               )}
               <div className="flex gap-4 justify-between">
                 <InputFeid
-                  title={"Confirm Password"}
+                  title={"Password"}
                   type={"password"}
                   id={"password"}
                   setstate={(e) => setpassword(e)}
@@ -112,7 +153,8 @@ const Register = () => {
                 />
               </div>
               <button
-                type="submit"
+                type="button"
+                onClick={SubmitSignUp}
                 className="bg-mainc py-2 mt-2 text-white rounded-2xl hover:text-blackt"
                 id="submitbtn"
               >
@@ -125,6 +167,7 @@ const Register = () => {
                   Login
                 </Link>
               </p>
+              {ErrorState && <p className="text-red-500">{Error}</p>}
             </form>
           </div>
         </div>

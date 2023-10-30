@@ -1,10 +1,26 @@
 import { navDataDash } from "@/dummyData/data";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import DashboardNavItem from "../atom/DashboardNavItem";
 import Link from "next/link";
+import { fetchData } from "@/utils/ApiCall";
 
-const DashboardLayout = ({ children, logout, balance, name }) => {
+const DashboardLayout = ({ children }) => {
+  const [User, setUser] = useState();
+  useEffect(() => {
+    const fetcUserDetails = async () => {
+      const token = `Bearer ${localStorage.getItem("token")}`;
+      const Url = `${process.env.NEXT_PUBLIC_BaseUrl}api/user/auth/me/info`;
+      try {
+        const getData = await fetchData(Url, token);
+        setUser(getData);
+        console.log(getData);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetcUserDetails();
+  }, []);
   return (
     <section
       className="flex"
@@ -28,19 +44,20 @@ const DashboardLayout = ({ children, logout, balance, name }) => {
           ))}
         </div>
         <div className="flex  justify-center">
-          <button
-            className="bg-white py-2 px-8 text-blackt rounded-2xl"
-            onClick={logout}
-          >
-            Log out
-          </button>
+          <Link href={"/"}>
+            <button className="bg-white py-2 px-8 text-blackt rounded-2xl">
+              Log out
+            </button>
+          </Link>
         </div>
       </aside>
       <main className="w-4/5 mt-12 px-10" style={{ height: "100vh" }}>
         <section className="flex justify-between item-center gap-20">
-          <h3 className="text-blackt font-bold text-2xl">Welcome {name}</h3>
           <h3 className="text-blackt font-bold text-2xl">
-            Nasa Token Balance: {balance}
+            Welcome {User.firstName} {User.lastName}
+          </h3>
+          <h3 className="text-blackt font-bold text-2xl">
+            Nasa Token Balance: {User.wallet.balance}
           </h3>
         </section>
         {children}

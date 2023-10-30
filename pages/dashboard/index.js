@@ -27,11 +27,7 @@ const Dashboard = () => {
     }
   };
   return (
-    <DashboardLayout
-      name={"Saheed babatunde"}
-      balance={2000}
-      logout={logout_user}
-    >
+    <DashboardLayout>
       <section className="mt-4">
         <h1 className="text-3xl font-bold text-mainc">Book Ride</h1>
         <div>

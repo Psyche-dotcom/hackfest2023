@@ -1,12 +1,36 @@
 import InputFeid from "@/components/atom/InputFeid";
 import LoginView from "@/components/body/LoginView";
+import { fetchData, fetcher, postDataAuth } from "@/utils/ApiCall";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 
 const Login = () => {
+  const [ErrorState, setErrorState] = useState(false);
+  const [Error, setError] = useState("");
+  const router = useRouter();
   const [password, setpassword] = useState("");
   const [email, setemail] = useState("");
+  const SubmitLogin = async () => {
+    const url = `${process.env.NEXT_PUBLIC_BaseUrl}api/user/auth/login`;
+    var data = {
+      email: email,
+      password: password,
+    };
+    try {
+      var login = await postDataAuth(url, data, "");
+      if (login.statusCode === 200) {
+        localStorage.setItem("token", login.result.jwt);
+        router.push("/dashboard");
+      }
+    } catch (error) {
+      var errorMessage = error.response.data.errorMessages;
+      console.log(errorMessage);
+      setError(errorMessage[0]);
+      setErrorState(true);
+    }
+  };
   return (
     <section style={{ width: "100vw", height: "100vh" }}>
       <div className="flex flex-col justify-center items-center w-full h-full">
@@ -52,7 +76,8 @@ const Login = () => {
                       />
                     </div>
                     <button
-                      type="submit"
+                      type="button"
+                      onClick={SubmitLogin}
                       className="bg-mainc py-2 mt-2 text-white rounded-2xl hover:text-blackt"
                       id="submitbtn"
                     >
@@ -71,6 +96,7 @@ const Login = () => {
                       sign up
                     </Link>
                   </p>
+                  {ErrorState && <p className="text-red-500">{Error}</p>}
                 </div>
               </div>
               <div className="w-1/2">

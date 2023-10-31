@@ -34,7 +34,7 @@ const Buy_nasa = () => {
       <section className="mt-4">
         <h1 className="text-3xl font-bold text-mainc">Buy Nasa</h1>
         <div>
-          <p className="text-center">$1 == 500 nasa</p>
+          <p className="text-center">$1 == 50 nasa</p>
           <PurchaseNasa />
         </div>
       </section>

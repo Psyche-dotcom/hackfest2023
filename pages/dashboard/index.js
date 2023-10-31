@@ -1,31 +1,28 @@
 import BookRide from "@/components/atom/BookRide";
 import DashboardLayout from "@/components/layout/DashboardLayout";
 import DataTable from "@/components/organism/DataTable";
-import React, { useState } from "react";
+import { fetchData } from "@/utils/ApiCall";
+import React, { useState, useEffect } from "react";
 
 const Dashboard = () => {
   const [price, setprice] = useState("");
-  const data = [
-    { pickup: "Lagos", destination: "Abuja", amountSpent: 50.25 },
-    { pickup: "Ondo", destination: "kano", amountSpent: 75.5 },
-    { pickup: "Lagos", destination: "Ibadan", amountSpent: 30.75 },
-  ];
-  const logout_user = async () => {
-    console.log("click");
+  const [getAllTrips, setGetAllTrips] = useState([]);
+
+  const getAllUserTrip = async () => {
     try {
-      const user_detail = await axios.post(log_out, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("user").slice(1, -1)}`,
-        },
-      });
-      router.push("/");
-      localStorage.removeItem("user");
+      const token = `Bearer ${localStorage.getItem("token")}`;
+      const Url = `${process.env.NEXT_PUBLIC_BaseUrl}api/book/getalltrip`;
+      const responseInfo = await fetchData(Url, token);
+      setGetAllTrips(responseInfo);
     } catch (error) {
-      router.push("/");
-      localStorage.removeItem("user");
-      console.log(error);
+      // alert(error.response.data.errorMessages[0]);
     }
   };
+
+  useEffect(() => {
+    getAllUserTrip();
+  }, []);
+
   return (
     <DashboardLayout>
       <section className="mt-4">
@@ -37,7 +34,7 @@ const Dashboard = () => {
       <section className="mt-4">
         <h1 className="text-3xl font-bold text-mainc">Ride Taken</h1>
         <div>
-          <DataTable data={data} />
+          <DataTable data={getAllTrips} />
         </div>
       </section>
     </DashboardLayout>

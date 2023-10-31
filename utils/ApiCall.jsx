@@ -61,3 +61,16 @@ export const postDataAuth = async (url, data, auth) => {
     throw error;
   }
 };
+export const postData = async (url, auth) => {
+  try {
+    const response = await axios.post(url, {
+      headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        Authorization: auth,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

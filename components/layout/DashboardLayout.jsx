@@ -14,6 +14,7 @@ const DashboardLayout = ({ children }) => {
       try {
         const getData = await fetchData(Url, token);
         setUser(getData);
+        localStorage.setItem("clientid", getData.id);
         console.log(getData);
       } catch (e) {
         console.log(e);
@@ -21,6 +22,9 @@ const DashboardLayout = ({ children }) => {
     };
     fetcUserDetails();
   }, []);
+  if (!User) {
+    return <p>Loading... </p>;
+  }
   return (
     <section
       className="flex"
@@ -51,7 +55,10 @@ const DashboardLayout = ({ children }) => {
           </Link>
         </div>
       </aside>
-      <main className="w-4/5 mt-12 px-10" style={{ height: "100vh" }}>
+      <main
+        className="w-4/5 mt-12 px-10"
+        style={{ height: "100vh", overflowY: "scroll" }}
+      >
         <section className="flex justify-between item-center gap-20">
           <h3 className="text-blackt font-bold text-2xl">
             Welcome {User.firstName} {User.lastName}
@@ -60,7 +67,7 @@ const DashboardLayout = ({ children }) => {
             Nasa Token Balance: {User.wallet.balance}
           </h3>
         </section>
-        {children}
+        <div>{children}</div>
       </main>
     </section>
   );
